@@ -13,21 +13,28 @@ export type DatasetSelectorProps = {
 
 export const DatasetSelector: React.FC<DatasetSelectorProps> = ({ dataset, onChange, windowPercent, onWindowPercentChange }) => {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 lg:gap-8 md:grid-cols-2">
       <div className="grid gap-2">
-        <Label htmlFor="dataset">Dataset</Label>
+        <p>Dataset</p>
+
         <Select value={dataset} onValueChange={(v) => onChange(v as DatasetId)}>
           <SelectTrigger id="dataset" className="w-full">
             <SelectValue placeholder="Select a dataset" />
           </SelectTrigger>
+          
           <SelectContent>
-            <SelectItem value="economy_gdp_growth_us">Economics • US GDP Growth</SelectItem>
-            <SelectItem value="environment_temp_nyc">Environment • NYC Daily Mean Temperature</SelectItem>
+            <SelectItem value="economy_gdp_growth_kenya">Kenya • GDP Growth</SelectItem>
+            <SelectItem value="population_total_kenya">Kenya • Population, total</SelectItem>
+            <SelectItem value="economy_inflation_kenya">Kenya • Inflation, consumer prices</SelectItem>
+            <SelectItem value="health_life_expectancy_kenya">Kenya • Life expectancy at birth</SelectItem>
+            <SelectItem value="development_access_to_electricity_kenya">Kenya • Access to electricity</SelectItem>
           </SelectContent>
         </Select>
       </div>
+
       <div className="grid gap-2">
-        <Label>Time Window</Label>
+        <p>Time Window</p>
+
         <Slider
           value={[windowPercent]}
           onValueChange={(arr) => onWindowPercentChange(arr[0] ?? 100)}

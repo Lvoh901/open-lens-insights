@@ -4,7 +4,6 @@ import { SeriesPoint } from "@/services/openData";
 
 export type D3LineChartProps = {
   data: SeriesPoint[];
-  height?: number;
   margin?: { top: number; right: number; bottom: number; left: number };
   unit?: string;
   onReady?: (svg: SVGSVGElement | null) => void;
@@ -12,20 +11,19 @@ export type D3LineChartProps = {
 
 export const D3LineChart: React.FC<D3LineChartProps> = ({
   data,
-  height = 340,
   margin = { top: 20, right: 20, bottom: 36, left: 48 },
   unit,
   onReady,
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const svgRef = React.useRef<SVGSVGElement>(null);
-  const [width, setWidth] = React.useState(800);
+  const [size, setSize] = React.useState({ width: 800, height: 340 });
   const [tooltip, setTooltip] = React.useState<{ x: number; y: number; label: string } | null>(null);
 
   React.useEffect(() => {
     const obs = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        setWidth(Math.floor(entry.contentRect.width));
+        setSize({ width: Math.floor(entry.contentRect.width), height: Math.floor(entry.contentRect.height) });
       }
     });
     if (containerRef.current) obs.observe(containerRef.current);
@@ -37,8 +35,8 @@ export const D3LineChart: React.FC<D3LineChartProps> = ({
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
-    const innerW = Math.max(width - margin.left - margin.right, 100);
-    const innerH = Math.max(height - margin.top - margin.bottom, 100);
+    const innerW = Math.max(size.width - margin.left - margin.right, 100);
+    const innerH = Math.max(size.height - margin.top - margin.bottom, 100);
 
     const x = d3
       .scaleUtc()
@@ -133,11 +131,11 @@ export const D3LineChart: React.FC<D3LineChartProps> = ({
       .on("mouseleave", () => setTooltip(null));
 
     if (onReady) onReady(svgRef.current);
-  }, [data, height, margin, unit, width, onReady]);
+  }, [data, margin, unit, size, onReady]);
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      <svg ref={svgRef} width={width} height={height} role="img" aria-label="Line chart" />
+    <div ref={containerRef} className="relative w-full h-[340px]">
+      <svg ref={svgRef} width={size.width} height={size.height} role="img" aria-label="Line chart" />
       {tooltip && (
         <div
           className="pointer-events-none absolute -translate-x-1/2 -translate-y-3 rounded-md border bg-popover px-2 py-1 text-xs text-popover-foreground shadow"
