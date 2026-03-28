@@ -7,6 +7,7 @@ export type D3LineChartProps = {
   margin?: { top: number; right: number; bottom: number; left: number };
   unit?: string;
   onReady?: (svg: SVGSVGElement | null) => void;
+  highlightAnomalies?: boolean;
 };
 
 export const D3LineChart: React.FC<D3LineChartProps> = ({
