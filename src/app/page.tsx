@@ -117,20 +117,15 @@ const Index: React.FC = () => {
       {/* Enhanced header */}
       <header className="border-b bg-gray-300 shadow sticky top-0 z-30">
         <div className="container mx-auto flex items-center justify-between py-3">
-          <a href="/" className="inline-flex items-center gap-3 hover:opacity-90 transition">
-            <img src="/logo.png" className="w-14 h-14 drop-shadow-md" alt="Open Data Logo" />
-            <h2 className="text-xl font-bold tracking-tight text-brand drop-shadow-sm">Open Data Insights</h2>
-          </a>
-          <nav className="hidden md:flex items-center gap-4">
-            <Button variant="link" asChild className="text-lg px-3 hover:underline decoration-brand underline-offset-8">
-              <a href="#dashboard" onClick={() => scrollToSection("dashboard")}>Datasets</a>
-            </Button>
-            <Button variant="link" asChild className="text-lg px-3 hover:underline decoration-brand-2 underline-offset-8">
-              <a href="#insights" onClick={() => scrollToSection("insights")}>Insights</a>
-            </Button>
+          <Link href="/" className="inline-flex items-center gap-3 hover:opacity-90 transition font-bold text-xl">Open Data Insights</Link>
+
+          <nav className="hidden md:flex items-center gap-2">
+            <Link href="#dashboard" onClick={() => scrollToSection("dashboard")} className="px-3 hover:underline decoration-brand underline-offset-8 text-[15px]">Datasets</Link>
+            <Link href="#insights" onClick={() => scrollToSection("insights")} className="px-3 hover:underline decoration-brand underline-offset-8 text-[15px]">Insights</Link>
+
             <Button
               variant="hero"
-              className="ml-2 px-6 py-2 text-lg font-bold shadow-glow"
+              className="ml-2 px-6 py-2 font-bold shadow-glow"
               onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
             >
               Explore
@@ -336,6 +331,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import Link from "next/link";
 
 // BookmarksList: UI improved
 const BookmarksList: React.FC<{
